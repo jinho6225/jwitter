@@ -1,4 +1,4 @@
-import { dbService } from "fbase";
+import { dbService, storageService } from "fbase";
 import React, {useState} from "react";
 import { isElement } from "react-dom/test-utils";
 
@@ -7,12 +7,10 @@ const Jweet = ({jweetObj, isOwner}) => {
     const [newJweet, setNewJweet] = useState(jweetObj.text)
     const onDeleteClick = async () => {
         const ok = window.confirm("Are you sure you want to delete this jweet?");
-
         if (ok) {
             await dbService.doc(`jweets/${jweetObj.id}`).delete();
-        } else {
-
-        }
+            await storageService.refFromURL(jweetObj.attachmentUrl).delete();
+        } 
     }
     const toggleEditing = () => setEditing(prev => !prev);
     const onSubmit = async (e) => {
@@ -44,6 +42,7 @@ const Jweet = ({jweetObj, isOwner}) => {
     (
         <>
             <h4>{jweetObj.text}</h4>
+            {jweetObj.attachmentUrl && <img src={jweetObj.attachmentUrl} width="50px" height="50px"/>}
             {isOwner && (
                 <>
                     <button onClick={onDeleteClick}>Delete Jweet</button>
