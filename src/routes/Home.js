@@ -5,6 +5,7 @@ import Jweet from "components/Jweet"
 const Home = ({userObj}) => {
     const [jweet, setJweet] = useState("");
     const [jweets, setJweets] = useState([]);
+    const [attachment, setAttachment] = useState()
     const getJweets = async () => {
         const dbjweets = await dbService.collection("jweets").get()
         dbjweets.forEach(document => {
@@ -41,12 +42,31 @@ const Home = ({userObj}) => {
         const { value } = e.target;
         setJweet(value);
     }
+    const onFilechange = (e) => {
+        const { files } = e.target
+        const theFile = files[0]
+        const reader = new FileReader();
+        reader.onloadend = (finishedEvent) => {
+            console.log(finishedEvent)
+            const { result } = finishedEvent.currentTarget
+            setAttachment(result)
+        }
+        reader.readAsDataURL(theFile);
+    }
+    const onclearAttachment = () => setAttachment(null)
 
     return (
         <div>
             <form onSubmit={onSubmit}>
                 <input value={jweet} onChange={onChange} type="text" placeholder="What's on your mind?" maxLength={120} />
+                <input type="file" accept="image/*" onChange={onFilechange} />
                 <input type="submit" value="Jweet" />
+                    {attachment && 
+                        <div>
+                        <img src={attachment} width="50px" height="50px" />
+                        <button onClick={onclearAttachment}>Clear</button>
+                        </div>    
+                    }
             </form>
             <div>
                 {jweets.map(jweet => (
