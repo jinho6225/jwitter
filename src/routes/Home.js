@@ -6,7 +6,7 @@ import Jweet from "components/Jweet"
 const Home = ({userObj}) => {
     const [jweet, setJweet] = useState("");
     const [jweets, setJweets] = useState([]);
-    const [attachment, setAttachment] = useState()
+    const [attachment, setAttachment] = useState('')
     const getJweets = async () => {
         const dbjweets = await dbService.collection("jweets").get()
         dbjweets.forEach(document => {
@@ -72,7 +72,7 @@ const Home = ({userObj}) => {
                 <input type="submit" value="Jweet" />
                     {attachment && 
                         <div>
-                        <img src={attachment} width="50px" height="50px" />
+                        <img src={attachment} width="50px" height="50px" alt="" />
                         <button onClick={onclearAttachment}>Clear</button>
                         </div>    
                     }
