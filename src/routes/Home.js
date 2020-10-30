@@ -1,20 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { dbService, storageService } from 'fbase'
+import { dbService } from 'fbase'
 import Jweet from "components/Jweet"
 import JweetFactory from "components/JweetFactory";
 
 const Home = ({userObj}) => {
     const [jweets, setJweets] = useState([]);
-    const getJweets = async () => {
-        const dbjweets = await dbService.collection("jweets").get()
-        dbjweets.forEach(document => {
-            const jweetObect = {
-                ...document.data(),
-                id: document.id,
-            }
-            setJweets((prev) => [jweetObect, ...prev])
-        })
-    }
+
     useEffect(() => {
         dbService.collection("jweets").onSnapshot(snapshot => {
             const jweetArray = snapshot.docs.map((doc) => ({

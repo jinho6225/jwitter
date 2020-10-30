@@ -8,9 +8,12 @@ import {
   faGithub,
 } from "@fortawesome/free-brands-svg-icons";
 
+
 const Auth = () => {
-  const onSocialClick = async (e) => {
-    const { name } = e.target;
+  const onSocialClick = async (event) => {
+    const {
+      target: { name },
+    } = event;
     let provider;
     if (name === "google") {
       provider = new firebaseInstance.auth.GoogleAuthProvider();
@@ -19,7 +22,6 @@ const Auth = () => {
     }
     await authService.signInWithPopup(provider);
   };
-
   return (
     <div className="authContainer">
       <FontAwesomeIcon
@@ -33,7 +35,6 @@ const Auth = () => {
         <button onClick={onSocialClick} name="google" className="authBtn">
           Continue with Google <FontAwesomeIcon icon={faGoogle} />
         </button>
-
         <button onClick={onSocialClick} name="github" className="authBtn">
           Continue with Github <FontAwesomeIcon icon={faGithub} />
         </button>

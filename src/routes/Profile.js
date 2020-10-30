@@ -24,38 +24,32 @@ export default ({ refreshUser, userObj }) => {
     const { value } = e.target;
     setNewDisplayName(value);
   };
-  const onSubmit = async (e) => {
-    e.preventDefault();
-    if (userObj.displayName !== newDisplayName) {
-      await userObj.updateProfile({
-        displayName: newDisplayName,
-      });
-      refreshUser();
+  
+    const onSubmit = async (e) => {
+        e.preventDefault()
+        if (userObj.displayName !== newDisplayName) {
+            await userObj.updateProfile({
+                displayName: newDisplayName
+            })
+            refreshUser();
+        }
     }
-  };
-  return (
-    <div className="container">
-      <form onSubmit={onSubmit} className="profileForm">
-        <input
-          onChange={onChange}
-          type="text"
-          autoFocus
-          placeholder="Display name"
-          value={newDisplayName}
-          className="formInput"
-        />
-        <input
+    return (
+        <div className="container">
+        <form onSubmit={onSubmit} className="profileForm">
+            <input type="text" placeholder="Display name" autoFocus onChange={onChange} className="formInput" />
+            <input
           type="submit"
           value="Update Profile"
           className="formBtn"
           style={{
             marginTop: 10,
-          }}
-        />
-      </form>
-      <span className="formBtn cancelBtn logOut" onClick={onLogOutClick}>
+          }} />
+        </form>
+        <span className="formBtn cancelBtn logOut" onClick={onLogOutClick}>
         Log Out
       </span>
     </div>
-  );
+    );
+    
 };

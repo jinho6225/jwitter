@@ -84,6 +84,7 @@ const JweetFactory = ({ userObj }) => {
             style={{
               backgroundImage: attachment,
             }}
+            alt=""
           />
           <div className="factoryForm__clear" onClick={onClearAttachment}>
             <span>Remove</span>
