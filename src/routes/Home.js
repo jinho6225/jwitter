@@ -27,14 +27,14 @@ const Home = ({userObj}) => {
 
 
     return (
-        <div>
-            <JweetFactory userObj={userObj}></JweetFactory>
-            <div>
+        <div className="container">
+        <JweetFactory userObj={userObj}></JweetFactory>
+        <div style={{ marginTop: 30 }}>
                 {jweets.map(jweet => (
                     <Jweet 
                     key={jweet.id} 
                     jweetObj={jweet} 
-                    isOwner={jweet.creatorId === userObj.uid} 
+                    isOwner={jweet.creatorId === userObj?.uid} 
                     />
                 ))}
             </div>

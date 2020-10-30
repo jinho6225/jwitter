@@ -1,6 +1,8 @@
 import { dbService, storageService } from "fbase";
 import React, {useState} from "react";
 import { isElement } from "react-dom/test-utils";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash, faPencilAlt } from "@fortawesome/free-solid-svg-icons";
 
 const Jweet = ({jweetObj, isOwner}) => {
     const [editing, setEditing] = useState(false)
@@ -25,29 +27,34 @@ const Jweet = ({jweetObj, isOwner}) => {
         setNewJweet(value)
     }
     return (
-        <div >
-{
+        <div className="nweet">
+        {
     editing 
     ? 
     (
         <>
-            <form onSubmit={onSubmit}>
-                <input type="text" placeholder="Edit your jweet" value={newJweet} required onChange={onChange}/>
-                <input type="submit" value="Update Jweet"/>
+          <form onSubmit={onSubmit} className="container nweetEdit">
+                <input type="text" placeholder="Edit your jweet" value={newJweet} className="formInput" autoFocus required onChange={onChange}/>
+                <input type="submit" value="Update Jweet" className="formBtn"/>
             </form>
-            <button onClick={toggleEditing}>Cancel</button>
-        </>
+            <span onClick={toggleEditing} className="formBtn cancelBtn">
+            Cancel
+          </span>        </>
     )
     : 
     (
         <>
             <h4>{jweetObj.text}</h4>
-            {jweetObj.attachmentUrl && <img src={jweetObj.attachmentUrl} width="50px" height="50px" alt="" />}
+            {jweetObj.attachmentUrl && <img src={jweetObj.attachmentUrl} />}
             {isOwner && (
-                <>
-                    <button onClick={onDeleteClick}>Delete Jweet</button>
-                    <button onClick={toggleEditing}>Edit Jweet</button>
-                </>
+            <div className="nweet__actions">
+            <span onClick={onDeleteClick}>
+              <FontAwesomeIcon icon={faTrash} />
+            </span>
+            <span onClick={toggleEditing}>
+              <FontAwesomeIcon icon={faPencilAlt} />
+            </span>
+          </div>
             )}
         </>
     )}
